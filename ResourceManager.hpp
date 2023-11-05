@@ -7,7 +7,7 @@ class ResourceManager
     public:
     ResourceManager()
     {
-        res_ref = new Resource;
+        res_ref = new Resource();
     }
 
     ~ResourceManager()
@@ -15,11 +15,12 @@ class ResourceManager
         delete res_ref;
     }
 
-    ResourceManager(const ResourceManager& ResMgr) : res_ref{ResMgr.res_ref} {}
+    ResourceManager(const ResourceManager& ResMgr) : res_ref{new Resource(*ResMgr.res_ref)} {}
 
     ResourceManager& operator=(const ResourceManager& other_res)
     {
-        res_ref = other_res.res_ref;
+        delete res_ref;
+        res_ref = new Resource(*other_res.res_ref);
         return *this;
     }
 
